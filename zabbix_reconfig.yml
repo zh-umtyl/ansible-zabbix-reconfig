@@ -1,0 +1,18 @@
+---
+- name: Обновить конфигурацию Zabbix Agent
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Добавить UserParameter
+      blockinfile:
+        path: /etc/zabbix/zabbix_agentd.conf
+        block: |
+          UserParameter=vm.ip[*],/usr/local/bin/get_vm_ip.sh "$1" "$2"
+        marker: "# {mark} ANSIBLE MANAGED"
+
+    - name: Перезапустить Zabbix Agent
+      service:
+        name: zabbix-agent
+        state: restarted
+
