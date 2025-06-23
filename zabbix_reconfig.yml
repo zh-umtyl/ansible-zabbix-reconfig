@@ -6,7 +6,7 @@
   tasks:
     - name: Добавить UserParameter
       blockinfile:
-        path: /etc/zabbix/zabbix_agentd.conf
+        path: /etc/zabbix/zabbix_agent2.conf
         block: |
           UserParameter=vm.ip[*],/usr/local/bin/get_vm_ip.sh "$1" "$2"
         marker: "# {mark} ANSIBLE MANAGED"
